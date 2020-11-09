@@ -5,5 +5,8 @@
 # Generated makefile
 makefile
 
-# Generated Configuration File
+# Generated configuration file
 *.conf.json
+
+# Generated result file
+build/**
