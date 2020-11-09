@@ -8,5 +8,8 @@ makefile
 # Generated configuration file
 *.conf.json
 
+# Python Cache
+*.pyc
+
 # Generated result file
 build/**
