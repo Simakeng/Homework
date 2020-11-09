@@ -1,4 +1,4 @@
-# Homeworks collection
+# Homework Collections
 
 ### Author:
 
@@ -18,10 +18,11 @@ Hunan Institute of Science and Technology
 - GNU Make 4.3+ 
 - LTSpice [https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html](https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html)
 - icarus Verilog [http://iverilog.icarus.com/](http://iverilog.icarus.com/)
+- Texlive [https://www.tug.org/texlive/](https://www.tug.org/texlive/)
 
 ### How To Build:
 
-Just type commands:.
+Just type commands:
 ```bash
 configure
 make <target you want>
