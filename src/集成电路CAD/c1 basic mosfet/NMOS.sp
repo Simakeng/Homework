@@ -1,9 +1,13 @@
-EX2                 ;标题
-VS 1 0 10           ;电源10V，连接在节点1和节点0
-R1 1 2 20           ;电阻R1，20欧姆,连接在节点1和节点2
-R2 2 0 20           ;电阻R2，20欧姆,连接在节点2和节点0
-R3 3 0 4K           ;电阻R3，4k欧姆,连接在节点3和节点0
-L 2 3 0.2 IC=0.2    ;电感L，0.2H,连接在节点2和节点3
-C 3 0 0.5U IC=2     ;电容C，0.5微法,连接在节点3和节点0
-.TRAN 0.1M 30M UIC  ;瞬态分析,打印时间间隔0.1ms，终止时间30ms，使用初始化条件
-.END                ;结束
+.title NMOS_DC
+.lib '..\lib\tsmc018r.lib' TT
+
+VVDS net2 0 DC 1v
+VVGS net1 0 DC 1v
+MNM0 net2 net1 0 nch1 W=10u L=180n
+.temp 27
+.op
+.dc VVDS 0 1.8 0.1 VVGS 0 1.8 1
+
+.option post accurate probe
+.probe v(net2) v(net1) I(MNM0)
+.end

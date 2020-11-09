@@ -1,3 +1,7 @@
 # LTSpice ResultFile
 *.raw
 *.log
+
+# generated makefile
+
+makefile

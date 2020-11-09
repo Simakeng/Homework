@@ -1,11 +1,27 @@
-hello : 
+hello :
 	@echo "================================="
-	@echo "=                               ="
-	@echo "=                               ="
+	@echo "|  Home Work Compile Utilities  |"
+	@echo "|          Simakeng             |"
 	@echo "================================="
-	# Detec Python Env:
-	EXIT_CODE := $(Python -V; echo $$?)
-	ifneq ($(EXIT_CODE),0)
-		@echo Python not installed
-	else
-		@echo Python installed
+	
+.PHONY : hello
+
+python_version := $(shell python -V)
+detect_python:
+ifeq ($(.SHELLSTATUS),0)
+	@echo "[SUCCESS] $(python_version) installed!"
+else
+	@echo [ERROR] Python not install!
+endif
+.PHONY : detect_python
+
+
+
+ltspice_dir = PLEASE CONFIGURE LTSPICE HERE
+detect_ltspice:
+ifeq ($(ltspice_dir),PLEASE CONFIGURE LTSPICE HERE)
+	@echo [ERROR] Please Configure LTSpice install dir!
+else
+	@echo "[SUCCESS] LTSpice installed at $(ltspice_dir)"
+endif
+.PHONY : detect_ltspice
