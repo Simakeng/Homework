@@ -1,0 +1,45 @@
+$ title:
+Basic N-Channel MOSFET
+
+$ subject:
+IC CAD Homework 1
+
+$ author: Xiangyu Zi
+
+$ date:2020/11/9
+
+$ section:
+作业要求
+
+根据下列电路图对NMOS管进行仿真
+
+$ graph{sch.jpg}
+
+仿真要求：使用一个台积电的NMOS管模型，再使用一个自己设置的NMOS管模型。
+仿真结果：得到 I(d)-V(ds)的曲线。
+电子档作业中：要有代码，要有仿真图，仿真结果参数等（像交一份实验报告一样）。
+
+$ section:
+作业内容
+
+$ subsection:
+台积电的模型
+
+sp网表如下：
+$ exec{
+    code = $ loadfile(TSMC_NMOS.sp)
+    $echo ($ code{$code})
+}
+
+仿真结果：
+$ exec{
+    spice_exec TSMC_NMOS.sp
+    spice_graph TSMC_NMOS.raw TSMC_NMOS.jpg V(net2) V(net1) I(MNM0)
+    $echo ($ graph{TSMC_NMOS.jpg})
+}
+
+附件材料：
+
+$ exec{
+    archive NMOS.sp C1.zip
+}

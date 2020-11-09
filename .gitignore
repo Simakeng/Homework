@@ -2,6 +2,8 @@
 *.raw
 *.log
 
-# generated makefile
-
+# Generated makefile
 makefile
+
+# Generated Configuration File
+*.conf.json
