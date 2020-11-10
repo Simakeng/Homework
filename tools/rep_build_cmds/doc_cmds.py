@@ -30,9 +30,15 @@ def date(args):
     global default_args
     default_args['date'] = args
 
+def section(args):
+    return r'\section{%s}' % args
+
+def subsection(args):
+    return r'\subsection{%s}' % args
+
 def _gen_doc_header():
     res = []
     res.append(r'\title{%s}' % default_args['title'])
     res.append(r'\author{%s}' % default_args['author'])
-    res.append(r'\author{%s}' % default_args['date'])
+    res.append(r'\date{%s}' % default_args['date'])
     return '\n'.join(res)
