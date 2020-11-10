@@ -9,12 +9,13 @@
 # This file is used to generate homework report.
 import os
 import sys
-import time
 import getpass
 import argparse
 import regex as re
+from os import path
 from functools import reduce
 import rep_build_cmds as cmds
+import rep_build_cmds.doc_cmds
 
 file_name = r'src\IC CAD\C1\report.rep'
 out_file_name = r'build\IC CAD\C1\report.tex'
@@ -25,12 +26,6 @@ def perror(*args):
         print(arg, file=sys.stderr, end=' ')
     print('', file=sys.stderr)
 
-
-default_args = {
-    "title": "PLEASE SET REPORT TITLE!",
-    "author": getpass.getuser(),
-    "date": time.strftime("%Y-%m-%d"),
-}
 
 
 def execute_cmd(cmd, arg):
@@ -111,6 +106,12 @@ if __name__ == "__main__":
 
     if(find_error):
         sys.exit(1)
-    os.makedirs(os.path.dirname(out_file_name), exist_ok=True)
+
+    while(None in result_contents): result_contents.remove(None)
+    template = open(path.join(path.dirname(__file__),"rep_template.tex")).read()
+
+    os.makedirs(path.dirname(out_file_name), exist_ok=True)
     with open(out_file_name, 'w', encoding='utf-8') as f:
-        f.write('\n'.join(result_contents))
+        template = template.replace('%<header>%',rep_build_cmds.doc_cmds._gen_doc_header())
+        template = template.replace('%<body>%','\n'.join(result_contents))
+        f.write(template)

@@ -8,4 +8,4 @@
 # ******************************************************
 # This file contains commands in rep build.
 
-
+from rep_build_cmds.doc_cmds import *
