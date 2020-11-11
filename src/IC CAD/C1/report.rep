@@ -2,9 +2,14 @@ $ title:
 Basic N-Channel MOSFET
 
 $ subject:
-IC CAD Homework 1
+集成电路CAD 作业1
 
-$ author: Xiangyu Zi
+$ department {
+    湖南理工学院
+    物电学院 实验报告
+}
+
+$ author: 资翔宇
 
 $ date:2020/11/9
 

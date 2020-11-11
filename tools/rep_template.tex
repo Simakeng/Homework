@@ -1,9 +1,30 @@
 \documentclass[11pt, a4paper]{article}
 \usepackage[space]{ctex}
+\usepackage{graphicx}
+\usepackage{float} 
+
+\usepackage{geometry}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=2.5cm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{%<department>%}
+\fancyhead[C]{%<title>%}
+\fancyhead[R]{%<subject>%}
+
+\fancyfoot[C]{\thepage}
+
+\renewcommand\thesection{\chinese{section}、}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\alph{subsubsection})}
+
+\title{\heiti %<title>%\\ %<subject>%}
+
 %<header>%
 
 \begin{document}
 \maketitle
+\thispagestyle{fancy}
 %<body>%
 
 \end{document}

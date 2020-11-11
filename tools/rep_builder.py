@@ -14,18 +14,20 @@ import argparse
 import regex as re
 from os import path
 from functools import reduce
-import rep_build_cmds as cmds
-import rep_build_cmds.doc_cmds
+import rep_build.doc_cmds as cmds
+import rep_build.envs as envs
+from rep_build.doc_cmds import _apply_doc_header
 
 file_name = r'src\IC CAD\C1\report.rep'
 out_file_name = r'build\IC CAD\C1\report.tex'
+envs.set_input(file_name)
+envs.set_output(out_file_name)
 
 
 def perror(*args):
     for arg in args:
         print(arg, file=sys.stderr, end=' ')
     print('', file=sys.stderr)
-
 
 
 def execute_cmd(cmd, arg):
@@ -61,7 +63,7 @@ if __name__ == "__main__":
         if(line_content.startswith('$')):
             # Parse command
             command_name = re.search(
-                r'(?<=^\s*\$\s*)\w[\w\d]+(?=\s*:|\{)', line_content)
+                r'(?<=^\s*\$\s*)\w[\w\d]+(?=\s*(:|\{))', line_content)
             if(command_name):
                 command_name = command_name.group()
             else:
@@ -107,11 +109,13 @@ if __name__ == "__main__":
     if(find_error):
         sys.exit(1)
 
-    while(None in result_contents): result_contents.remove(None)
-    template = open(path.join(path.dirname(__file__),"rep_template.tex")).read()
+    while(None in result_contents):
+        result_contents.remove(None)
+    template = open(path.join(path.dirname(
+        __file__), "rep_template.tex"), encoding='utf-8').read()
 
     os.makedirs(path.dirname(out_file_name), exist_ok=True)
     with open(out_file_name, 'w', encoding='utf-8') as f:
-        template = template.replace('%<header>%',rep_build_cmds.doc_cmds._gen_doc_header())
-        template = template.replace('%<body>%','\n'.join(result_contents))
+        template = _apply_doc_header(template)
+        template = template.replace('%<body>%', '\n'.join(result_contents))
         f.write(template)

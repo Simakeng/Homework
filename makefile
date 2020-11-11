@@ -1,8 +1,8 @@
 hello :
-	@echo "================================="
-	@echo "|  Home Work Compile Utilities  |"
-	@echo "|          Simakeng             |"
-	@echo "================================="
+	@echo "================================"
+	@echo "|  HomeWork Compile Utilities  |"
+	@echo "|          Simakeng            |"
+	@echo "================================"
 	
 .PHONY : hello
 
