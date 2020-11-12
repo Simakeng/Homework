@@ -50,7 +50,6 @@ if __name__ == "__main__":
                              for i in range(len(line_lens))]
         lines = [line[:-1] if line.endswith('\n') else line for line in lines]
 
-    line_count = len(lines)
 
     lines = dict(zip(list(range(len(lines))), lines))
 
@@ -58,54 +57,60 @@ if __name__ == "__main__":
 
     find_error = False
     result_contents = []
+
+    line_count = len(lines)
     while current_line < line_count:
         line_content = lines[current_line]
-        if(line_content.startswith('$')):
-            # Parse command
-            command_name = re.search(
-                r'(?<=^\s*\$\s*)\w[\w\d]+(?=\s*(:|\{))', line_content)
-            if(command_name):
-                command_name = command_name.group()
+        try:
+            if(line_content.startswith('$')):
+                # Parse command
+                command_name = re.search(
+                    r'(?<=^\s*\$\s*)\w[\w\d]+(?=\s*(:|\{))', line_content)
+                if(command_name):
+                    command_name = command_name.group()
+                else:
+                    perror('Synatax Error in File "%s", line %d' %
+                           (file_name, current_line))
+                    find_error = True
+                    current_line += 1
+                    continue
+
+                if(line_content.find(':') != -1):
+                    # next line as arg
+                    command_arg = line_content[line_content.find(':') + 1:]
+                    current_line += 1
+                    command_arg += lines[current_line]
+                    command_arg = command_arg.strip()
+                    pass
+                elif(line_content.find('{') != -1):
+                    # parse command block
+                    beg_cnt = 1
+                    beg_index = raw_file_content.find(
+                        '{', line_indexs[current_line])
+                    end_index = beg_index + 1
+                    while(beg_cnt != 0):
+                        if(raw_file_content[end_index] == '{'):
+                            beg_cnt += 1
+                        elif(raw_file_content[end_index] == '}'):
+                            beg_cnt -= 1
+                        end_index += 1
+                    command_arg = raw_file_content[beg_index:end_index]
+                    command_line_count = reduce(
+                        lambda x, y: x + 1 if y == '\n' else x, command_arg, 0)
+                    command_arg = command_arg[1:-1].strip()
+                    current_line += command_line_count
+                    pass
+
+                result = execute_cmd(command_name, command_arg)
+                result_contents.append(result)
+                current_line += 1
             else:
-                perror('Synatax Error in File "%s", line %d' %
-                       (file_name, current_line))
-                find_error = True
+                result_contents.append(line_content)
                 current_line += 1
-                continue
-
-            if(line_content.find(':') != -1):
-                # next line as arg
-                command_arg = line_content[line_content.find(':') + 1:]
-                current_line += 1
-                command_arg += lines[current_line]
-                command_arg = command_arg.strip()
-                pass
-            elif(line_content.find('{') != -1):
-                # parse command block
-                beg_cnt = 1
-                beg_index = raw_file_content.find(
-                    '{', line_indexs[current_line])
-                end_index = beg_index + 1
-                while(beg_cnt != 0):
-                    if(raw_file_content[end_index] == '{'):
-                        beg_cnt += 1
-                    elif(raw_file_content[end_index] == '}'):
-                        beg_cnt -= 1
-                    end_index += 1
-                command_arg = raw_file_content[beg_index:end_index]
-                command_line_count = reduce(
-                    lambda x, y: x + 1 if y == '\n' else x, command_arg, 0)
-                command_arg = command_arg[1:-1].strip()
-                current_line += command_line_count
-                pass
-
-            result = execute_cmd(command_name, command_arg)
-            result_contents.append(result)
-            current_line += 1
-        else:
-            result_contents.append(line_content)
-            current_line += 1
-
+        except Exception as ex:
+            print(ex)
+            current_line+=1
+            find_error = True
     if(find_error):
         sys.exit(1)
 
