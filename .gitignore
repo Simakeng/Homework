@@ -13,3 +13,6 @@ makefile
 
 # Generated result file
 build/**
+
+# Visual Studio Code
+.vscode/**
