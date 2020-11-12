@@ -12,3 +12,6 @@ def loadfile(args):
     arg = args[0]
     file_path = envs.locate_input_resource(arg)
     return open(file_path,encoding='utf-8').read()
+
+def spice_exec(args):
+    

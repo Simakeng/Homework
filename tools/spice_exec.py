@@ -3,16 +3,9 @@
 # ******************************************************
 # Author        : simakeng
 # Email         : simakeng@outlook.com
-# Filename      : configure.py
+# Filename      : spice_exec.py
 # Description   : spice file executor
 # ******************************************************
-# This file ask user to configure enviroment arguments
-# and scan all avaliable rep to generate an makefile.
+# This file loads sp net list and pass it to spice
 
-import os
-
-def main():
-    pass
-
-if __name__ == "__main__":
-    main()
+import subprocess
