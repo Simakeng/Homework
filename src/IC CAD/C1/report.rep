@@ -24,6 +24,8 @@ $ graph{sch.jpg}
 仿真结果：得到 I(d)-V(ds)的曲线。
 电子档作业中：要有代码，要有仿真图，仿真结果参数等（像交一份实验报告一样）。
 
+$ newpage{}
+
 $ section:
 作业内容
 
@@ -40,7 +42,7 @@ $ exec{
 $ exec{
     spice_exec TSMC_NMOS.sp
     spice_graph TSMC_NMOS.raw TSMC_NMOS.jpg V(net2) V(net1) I(MNM0)
-    echo $ graph{TSMC_NMOS.jpg}
+    # echo $ graph{TSMC_NMOS.jpg}
 }
 
 附件材料：

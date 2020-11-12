@@ -3,6 +3,20 @@
 \usepackage{graphicx}
 \usepackage{float} 
 
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    numbers=left, 
+    numberstyle= \tiny, 
+    keywordstyle= \color{ blue!70},
+    commentstyle= \color{red!50!green!50!blue!50}, 
+    frame=shadowbox, % 阴影效果
+    rulesepcolor= \color{ red!20!green!20!blue!20} ,
+    escapeinside=``, % 英文分号中可写入中文
+    xleftmargin=2em,xrightmargin=2em, aboveskip=1em,
+    framexleftmargin=2em
+} 
+
 \usepackage{geometry}
 \geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=2.5cm}
 
@@ -19,6 +33,7 @@
 \renewcommand\thesubsubsection{\alph{subsubsection})}
 
 \title{\heiti %<title>%\\ %<subject>%}
+
 
 %<header>%
 
