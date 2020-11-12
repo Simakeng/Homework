@@ -6,7 +6,7 @@ IF not %ERRORLEVEL% == 0 GOTO PYTHON_NOT_INSTALL
 
 REM execute configure file
 cd %~dp0
-python configure.py
+python tools\configure.py
 
 REM check configure status
 IF not %ERRORLEVEL% == 0 GOTO FAIL
