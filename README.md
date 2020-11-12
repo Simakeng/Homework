@@ -1,5 +1,7 @@
 # Homework Collections
 
+finish your homework report in one line command
+
 ### Author:
 
 Xiangyu Zi
