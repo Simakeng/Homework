@@ -30,7 +30,9 @@ default_args = {
 def graph(args):
     file_path = envs.locate_input_resource(args)
     if(not path.exists(file_path)):
-        raise Exception('img file not found! (' + args + ')')
+        file_path = envs.locate_output_resource(args)
+        if(not path.exists(file_path)):
+            raise Exception('img file not found! (' + args + ')')
     return "\\begin{center}\n\\includegraphics[width=0.7\\textwidth]{%s}\n\\end{center}" % file_path.replace(path.sep, '//')
 
 

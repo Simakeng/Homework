@@ -41,8 +41,8 @@ $ exec{
 仿真结果：
 $ exec{
     spice_exec TSMC_NMOS.sp
-    spice_graph TSMC_NMOS.raw TSMC_NMOS.jpg V(net2) V(net1) I(MNM0)
-    # echo $ graph{TSMC_NMOS.jpg}
+    spice_graph TSMC_NMOS.raw TSMC_NMOS.jpg V(net2) V(net1) Ig(Mnm0)
+    echo $ graph{TSMC_NMOS.jpg}
 }
 
 附件材料：

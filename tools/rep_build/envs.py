@@ -47,3 +47,23 @@ def locate_input_resource(file_name):
         return rel_path
     
     return abs_path
+
+def locate_output_resource(file_name):
+    if(path.sep == '\\'):
+        if(re.search(r'^\w:',file_name)):
+            return file_name
+        # Windows
+    elif(path.sep == '/'):
+        if(file_name.startsWith('/')):
+            return file_name
+        # *nix
+    else:
+        raise NotImplementedError('Unknow Platform')
+
+    abs_path = path.abspath(path.join(output_tex_dir,file_name))
+    rel_path = path.abspath(file_name)
+
+    if(path.exists(rel_path)):
+        return rel_path
+    
+    return abs_path
