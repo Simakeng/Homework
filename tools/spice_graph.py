@@ -31,16 +31,18 @@ if __name__ == "__main__":
     for need_exps in args.values:
         if(not need_exps in raw.variables):
             print('"%s" did not contains "%s"' % (args.raw_file, need_exps))
+            
         graph_datas.append({
             "name" : need_exps,
-            "data" : raw.get_data(need_exps)
+            "data" : [raw.get_data(need_exps,i)for i in range(raw.case_count)]
         })
     lines = []
     legends = []
     for data in graph_datas:
-        line, = plt.plot(time, data['data'])
-        lines.append(line)
-        legends.append(data['name'])
+        for case in data['data']:
+            line, = plt.plot(time, case)
+            lines.append(line)
+            legends.append(data['name'])
 
     plt.legend(lines,legends)
     # datas = [raw.get_data(exps) for exps in args.values]

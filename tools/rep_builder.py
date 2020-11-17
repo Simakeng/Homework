@@ -11,6 +11,7 @@ import os
 import sys
 import getpass
 import argparse
+import subprocess
 import regex as re
 from os import path
 from functools import reduce
@@ -49,7 +50,6 @@ if __name__ == "__main__":
         line_indexs = [0] + [sum(line_lens[:i+1])
                              for i in range(len(line_lens))]
         lines = [line[:-1] if line.endswith('\n') else line for line in lines]
-
 
     lines = dict(zip(list(range(len(lines))), lines))
 
@@ -109,7 +109,7 @@ if __name__ == "__main__":
                 current_line += 1
         except Exception as ex:
             print(ex)
-            current_line+=1
+            current_line += 1
             find_error = True
     if(find_error):
         sys.exit(1)
@@ -124,3 +124,5 @@ if __name__ == "__main__":
         template = _apply_doc_header(template)
         template = template.replace('%<body>%', '\n'.join(result_contents))
         f.write(template)
+    subprocess.run('xelatex --interaction=nonstopmode --halt-on-error "%s"' %
+                   envs.output_tex_path, cwd=envs.output_tex_dir, shell=True, check=True)

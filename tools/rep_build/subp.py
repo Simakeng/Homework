@@ -11,6 +11,8 @@ import os
 import os.path as path
 import rep_build.envs as envs
 
+def archive(args):
+    return '详情请见附件'
 
 def loadfile(args):
     arg = args[0]
