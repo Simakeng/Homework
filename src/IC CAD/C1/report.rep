@@ -49,7 +49,7 @@ $ exec{
 }
 
 附件材料：
-
+见C1.zip
 $ exec{
-    archive NMOS.sp C1.zip
+    archive TSMC_NMOS.sp -o C1.zip
 }

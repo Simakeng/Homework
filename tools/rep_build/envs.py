@@ -45,8 +45,10 @@ def locate_input_resource(file_name):
 
     if(path.exists(rel_path)):
         return rel_path
-    
-    return abs_path
+    elif(path.exists(abs_path)):
+        return abs_path
+    else:
+        return file_name
 
 def locate_output_resource(file_name):
     if(path.sep == '\\'):

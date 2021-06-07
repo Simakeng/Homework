@@ -16,8 +16,8 @@ import subprocess
 import regex as re
 from os import path
 
-root_dir = path.abspath(path.dirname(path.dirname(__file__)))
-
+root_dir = path.dirname(path.dirname(path.abspath(__file__)))
+root_dir = root_dir[0].upper() + root_dir[1:]
 def configure():
     # xelatex
     xelatex_path = subprocess.check_output('where xelatex').decode().replace('\r\n','')
@@ -70,7 +70,9 @@ def find_all_rep_file(root):
     return reps
 def generate_makefile(reps):
     with open('makefile','w',encoding='utf-8') as f:
+        f.write('rep_build = python tools/rep_builder.py\n')
         f.write('targit help:\n')
+        f.write('\t@echo Targets:\n')
         reps = [detect_rep_info(rep)+(rep,) for rep in reps]
         ltitle = 0
         lsubj = 0
@@ -84,14 +86,22 @@ def generate_makefile(reps):
             index = "%s%d" % (index,indexs[index])
             ltitle = max(ltitle,len(title))
             lsubj = max(lsubj,len(subject))
+            root_dir = os.path.abspath('.') + os.path.sep
+            input_path = file_name.replace(root_dir,'')
+            output_path = path.join("build",path.dirname(input_path))
             targits.append({
                 "title" : title,
                 "subject" : subject,
                 "index" : index,
-                "path" : file_name
+                "input_path" : input_path,
+                "output_path": output_path
             })
         for targit in targits:
-            f.write('\techo make %s: %s %s\n' % (targit['index'],targit['title'].ljust(ltitle),targit['subject'].ljust(lsubj)))
+            f.write('\t@echo make %s: %s %s\n' % (targit['index'],targit['title'].ljust(ltitle),targit['subject'].ljust(lsubj)))
+
+        for targit in targits:
+            f.write(f'{targit["index"]}:\n')
+            f.write(f'\t$(rep_build) {targit["input_path"]} {targit["output_path"]}')
             
 def main():
     if(not path.exists(path.join(root_dir,'config.json'))):
