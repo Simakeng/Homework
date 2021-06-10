@@ -19,11 +19,17 @@ import rep_build.doc_cmds as cmds
 import rep_build.envs as envs
 from rep_build.doc_cmds import _apply_doc_header
 
-file_name = r'src\IC CAD\C1\report.rep'
-out_file_name = r'build\IC CAD\C1\report.tex'
+# file_name = r'src\IC CAD\C1\report.rep'
+# out_file_name = r'build\IC CAD\C1\report.tex'
+
+file_name = sys.argv[1]
+out_file_name = sys.argv[2]
+
 envs.set_input(file_name)
 envs.set_output(out_file_name)
 
+print('file_name:',sys.argv[1])
+print('out_file_name:',sys.argv[2])
 
 def perror(*args):
     for arg in args:
@@ -124,5 +130,6 @@ if __name__ == "__main__":
         template = _apply_doc_header(template)
         template = template.replace('%<body>%', '\n'.join(result_contents))
         f.write(template)
+        print("[assembly] writed to",out_file_name)
     subprocess.run('xelatex --interaction=nonstopmode --halt-on-error "%s"' %
                    envs.output_tex_path, cwd=envs.output_tex_dir, shell=True, check=True)

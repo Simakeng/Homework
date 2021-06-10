@@ -1,0 +1,119 @@
+$ title:
+EDA 仿真软件Hspice 及CMOS 工艺技术参数提取
+
+$ subject:
+模拟集成电路设计 实验1
+
+$index:
+aiccad
+
+$ department {
+    湖南理工学院
+    物电学院 实验报告
+}
+
+$ author: 资翔宇
+
+$ date:2021/6/9
+
+$ section:
+实验目的
+
+学习和掌握 EDA 仿真软件 Hspice；了解 CMOS 工艺技术与元器件模型，掌握 MOS 管工作原理及其伏安特性；由 Hspice 仿真与计算，提取 CMOS 中 NMOS 和 PMOS 的工艺参数，为后续实验打下基础。
+
+$ section:
+实验内容
+
+$ list{
+    安装和设置 Hspice
+    通过 Hspice 仿真获得 NMOS 和 PMOS 的工艺参数 $K_n(\mu_nC_{ox})$、$K_n(\mu_pC_{ox})$、$V_{tn}$、$V_{tp}$、$\lambda_{n}$、$\lambda_{p}$
+}
+
+$ section:
+预备知识
+
+$ subsection:
+Hspice 输入网表结构
+
+Hspice 的输入电路网表典型格式如下：
+$ graph{spice.png}
+
+以下用实例说明 Hspice 的输入电路网表。
+
+$ graph {circuit.png}
+
+Hspice 网表：
+
+$ graph {netlist.png}
+
+$ subsection:
+MOS 管的 I-V 工作特性
+
+半导体集成电路设计最常采用的两种工艺是 Bipolar 工艺和 MOS 工艺。近年来，由于 MOS 工艺可设计出高密度的电路，用户对高密度数字电路（如存储器和微处理器）的需求推动了 MOS 工艺在数字电路应用中的巨大发展。模拟和数字电路兼容在同一芯片上又催化 MOS 模拟电路设计的发展。当前，MOS 工艺中 CMOS 工艺占主导地位，许多新的 VLSI 集成电路设计采用 CMOS 工艺。本实验阐述CMOS 工艺中元器件 NMOS 和PMOS 用于模拟电路设计时的I-V 工作特性。
+NMOS 有三个工作区，截止区，线性区和饱和区。其端点电压及漏源电流 I- V 特性在不同工作区分别如下：
+
+
+1. 截止区:
+
+$ math{
+    V_{GS} < V_T,I_D = 0
+}
+
+2. 线性区:
+
+$ math{
+    0 < V_{DS} < V_{GS} - V_{TH}
+}
+
+$ math{
+    I_D = K_n(\frac{W}{L})[(V_{GS}-V_{T})V_{DS}-\frac{1}{2}V^2_{DS}]
+}
+
+3. 饱和区
+$ math{
+    0 < V_{GS} - V_{TH} < V_{DS} 
+}
+
+$ math{
+    I_D = \frac{1}{2}K_n(\frac{W}{L})(V_{GS}-V_{T})^2(1+\lambda_nV_{DS})
+}
+
+其中$K_n$是NMOS的跨导参数$K_n = \mu_nC_{OX}$， $V_T$是NMOS的阈值电压，$W$和 $L$是NMOS的宽和长，$\lambda_n$是沟道长度调制系数。
+
+$ graph{ivc.png}
+
+$ subsection:
+模拟电路中 CMOS 工作在饱和状态区
+
+CMOS 工艺中 NMOS 和 PMOS 用于模拟电路设计时必须工作在饱和区。这一现象由 MOSFET 的小信号模型的线性特征所决定。
+
+$ math{
+    g_m = \frac{\Delta i_{ds}}{\Delta v_{gs}} = K_n(\frac{W}{L})(V_{GS}-V_{T})
+}
+
+饱和状态下 NMOS 电压电流关系中的参数$K_n$,$V_T$,$\lambda_n$是 CMOS 工艺参数，理想状态下是常数。
+针对某一具体的 CMOS 工艺技术，通过仿真求取以上工艺参数是模拟电路设计的第一步。
+
+$ section:
+实验步骤
+
+$ subsection:
+下载/安装/设置 Hspice 仿真软件
+
+$ list{
+打开虚拟机软件 VMware Workstation，加载 Red Hat Linux 系统。
+建立实验目录，在/home/chris/目录下建立名为 hspice 目录以及CMOSexp01、CMOSexp02、CMOSexp03 三个子目录分别存放实验一、实验二、实验三的电路网表以及仿真结果。建立目录的命令为 mkdir。
+导入工艺库，可以使用共享文件夹或者 U 盘的方法将工艺库文件拷贝到/home/chris/hspice 目录下。mix025 1.l 是 tsmc 0.25um 混合信号 spice 模型库，本门课程所有实验都使用该工艺库，请记住工艺库的完整路径并在每个网表里调用：
+启动 hspice 的许可证文件管理服务，命令为 lmgrd。
+编写网表，进行仿真。
+}
+
+$ subsection:
+仿真计算 NMOS 工艺参数
+
+编写 Netlist 网表（注意实验一中 MOS 管的宽长统一为 W=2u，L=0.25u） 
+首先建立 NMOS 晶体管直流仿真的电路图，NMOS 管的栅极和漏级分别接直流扫描电压源
+ VGS 和 VDS，观察 NMOS 的 I/V 曲线。
+在完成对 spice 网表的仿真后，打开 sx2007 波形查看器并观察 NMOS 管的漏源电流与漏源电压之间的关系。
+点击 Add Cursor 可以观测曲线在 X-Y 轴的具体数值。在 sx2007 中移动十字标分别测量 VGS 为 0.8V 和 1V 输出线上，
+VDS 为 1V 和 1.5V 时的电流。

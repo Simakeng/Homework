@@ -88,8 +88,10 @@ def _apply_doc_header(template):
 def code(args):
     return '\\begin{lstlisting}[frame=shadowbox]\n' + args + '\n\\end{lstlisting}'
 
+
 def newpage(dummy):
     return '\\newpage'
+
 
 def exec(codes):
     codes = [code.strip() for code in codes.split('\n')]
@@ -138,3 +140,33 @@ def exec(codes):
                 return func(args)
             else:
                 raise Exception('echo no such command: %s' % command_name)
+
+
+def list(content: str):
+    contents = map(lambda x: x.strip(), content.split('\n'))
+    contents = [f'\item {c} \n' for c in contents]
+    return '\\begin{enumerate}\n' + ''.join(contents) + '\\end{enumerate}\n'
+
+
+def ulist(content: str):
+    contents = map(lambda x: x.strip(), content.split('\n'))
+    contents = [f'\item {c} \n' for c in contents]
+    return '\\begin{itemize}\n' + ''.join(contents) + '\\end{itemize}\n'
+
+
+def index(_):
+    pass
+
+
+def math(c):
+    rep = {
+        '(': r'\left(',
+        ')': r'\right)',
+        '[': r'\left[',
+        ']': r'\right]',
+        # '{': r'\left{',
+        # '}': r'\right}',
+    }
+    for k,v in rep.items():
+        c = c.replace(k,v)
+    return '\\begin{equation*}\n' + c + '\\end{equation*}\n'
